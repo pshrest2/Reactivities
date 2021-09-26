@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
+import "react-calendar/dist/Calendar.css";
 import "./app/layout/styles.css";
 import App from "./app/layout/App";
 import reportWebVitals from "./reportWebVitals";
@@ -11,7 +12,7 @@ ReactDOM.render(
   <StoreContext.Provider value={store}>
     <BrowserRouter>
       <App />
-    </BrowserRouter> 
+    </BrowserRouter>
   </StoreContext.Provider>,
   document.getElementById("root")
 );
