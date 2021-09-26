@@ -8,13 +8,13 @@ import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 const ActivityDashboard = () => {
   const { activityStore } = useStore();
+  const { loadActivities, activityRegistry, loadingInitial } = activityStore;
 
   useEffect(() => {
-    activityStore.loadActivities();
-  }, [activityStore]);
+    if (activityRegistry.size <= 1) loadActivities();
+  }, [activityRegistry.size, loadActivities]);
 
-  if (activityStore.loadingInitial)
-    return <LoadingComponent content="Loading App" />;
+  if (loadingInitial) return <LoadingComponent content="Loading App" />;
 
   return (
     <Grid>
