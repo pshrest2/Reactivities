@@ -7,7 +7,7 @@ class ActivityStore {
   activityRegistry = new Map<string, Activity>();
   selectedActivity: Activity | undefined = undefined;
   editMode = false;
-  loadingInitial = true;
+  loadingInitial = false;
   submitting = false;
   deleting = false;
 
