@@ -3,7 +3,6 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { store } from "../stores/store";
-import { request } from "http";
 import { User, UserFormValues } from "../models/user";
 
 const sleep = (delay: number) => {
