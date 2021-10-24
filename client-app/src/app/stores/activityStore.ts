@@ -1,7 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { Activity } from "../models/activity";
-import { v4 as uuid } from "uuid";
+import { Activity, ActivityFormValues } from "../models/activity";
 import { format } from "date-fns";
 import { store } from "./store";
 import { Profile } from "../models/profile";
@@ -94,32 +93,37 @@ class ActivityStore {
     this.loadingInitial = state;
   };
 
-  createActivity = async (activity: Activity) => {
-    this.submitting = true;
+  createActivity = async (activity: ActivityFormValues) => {
+    const user = store.userStore.user;
+    const attendee = new Profile(user!);
     try {
-      activity.id = uuid();
       await agent.Activities.create(activity);
-      this.setActivity(activity);
-      this.setSelectedActivity(activity);
-      this.setEditMode(false);
-      this.setSubmitting(false);
+      const newActivity = new Activity(activity);
+      newActivity.hostUsername = user!.username;
+      newActivity.attendees = [attendee];
+      this.setActivity(newActivity);
+      this.setSelectedActivity(newActivity);
     } catch (error) {
       console.log(error);
-      this.setSubmitting(false);
     }
   };
 
-  updateActivity = async (activity: Activity) => {
-    this.submitting = true;
+  updateActivity = async (activity: ActivityFormValues) => {
     try {
       await agent.Activities.update(activity);
-      this.setActivity(activity);
-      this.setSelectedActivity(activity);
-      this.setEditMode(false);
-      this.setSubmitting(false);
+      runInAction(() => {
+        if (activity.id) {
+          let updatedActivity = {
+            ...this.getActivity(activity.id),
+            ...activity,
+          };
+
+          this.activityRegistry.set(activity.id, updatedActivity as Activity);
+          this.selectedActivity = updatedActivity as Activity;
+        }
+      });
     } catch (error) {
       console.log(error);
-      this.setSubmitting(false);
     }
   };
 
