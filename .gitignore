@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-appsetting.json
+appsettings.json
 
 # User-specific files
 *.rsuser
@@ -62,9 +62,6 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
-
-# Tye
-.tye/
 
 # StyleCop
 StyleCopReport.xml
@@ -306,9 +303,6 @@ paket-files/
 
 # FAKE - F# Make
 .fake/
-
-# Ionide - VsCode extension for F# Support
-.ionide/
 
 # CodeRush personal settings
 .cr/personal
