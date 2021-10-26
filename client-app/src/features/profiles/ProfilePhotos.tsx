@@ -17,6 +17,7 @@ const ProfilePhotos = ({ profile }: Props) => {
       uploading,
       loading,
       setMainPhoto,
+      deletePhoto,
     },
   } = useStore();
   const [addPhotoMode, setAddPhotoMode] = useState(false);
@@ -32,6 +33,14 @@ const ProfilePhotos = ({ profile }: Props) => {
   ) => {
     setTarget(e.currentTarget.name);
     setMainPhoto(photo);
+  };
+
+  const handleDeletePhoto = (
+    id: string,
+    e: SyntheticEvent<HTMLButtonElement>
+  ) => {
+    setTarget(e.currentTarget.name);
+    deletePhoto(id);
   };
 
   return (
@@ -70,7 +79,14 @@ const ProfilePhotos = ({ profile }: Props) => {
                         loading={target === photo.id && loading}
                         onClick={(e) => handleSetMainPhoto(photo, e)}
                       />
-                      <Button basic color="red" icon="trash" />
+                      <Button
+                        basic
+                        loading={target === `${photo.id}-delete` && loading}
+                        name={`${photo.id}-delete`}
+                        color="red"
+                        icon="trash"
+                        onClick={(e) => handleDeletePhoto(photo.id, e)}
+                      />
                     </Button.Group>
                   )}
                 </Card>
