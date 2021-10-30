@@ -206,6 +206,10 @@ class ActivityStore {
       runInAction(() => (this.submitting = false));
     }
   };
+
+  clearSelectedActivity = () => {
+    this.selectedActivity = undefined;
+  };
 }
 
 export default ActivityStore;
