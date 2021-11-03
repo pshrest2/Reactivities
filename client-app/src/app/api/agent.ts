@@ -5,7 +5,6 @@ import { history } from "../..";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
-import { request } from "http";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {

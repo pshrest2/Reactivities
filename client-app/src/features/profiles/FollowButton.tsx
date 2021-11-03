@@ -24,14 +24,18 @@ const FollowButton = ({ profile }: Props) => {
   return (
     <Reveal animated="move">
       <Reveal.Content visible style={{ width: "100%" }}>
-        <Button fluid color="teal" content="Following" />
+        <Button
+          fluid
+          color="teal"
+          content={profile.following ? "Following" : "Not Following"}
+        />
       </Reveal.Content>
       <Reveal.Content hidden style={{ width: "100%" }}>
         <Button
           fluid
           basic
           color={profile.following ? "red" : "green"}
-          content={true ? "Unfollow" : "Follow"}
+          content={profile.following ? "Unfollow" : "Follow"}
           loading={loading}
           onClick={(e) => handleFollow(e, profile.username)}
         />
