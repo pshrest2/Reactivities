@@ -4,7 +4,7 @@ import { Activity, ActivityFormValues } from "../models/activity";
 import { format } from "date-fns";
 import { store } from "./store";
 import { Profile } from "../models/profile";
-import { Pagination } from "../models/pagination";
+import { Pagination, PagingParams } from "../models/pagination";
 
 class ActivityStore {
   activityRegistry = new Map<string, Activity>();
@@ -14,9 +14,21 @@ class ActivityStore {
   submitting = false;
   deleting = false;
   pagination: Pagination | null = null;
+  pagingParams = new PagingParams();
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  };
+
+  get axiosParama() {
+    const params = new URLSearchParams();
+    params.append("pageNumber", this.pagingParams.pageNumber.toString());
+    params.append("pageSize", this.pagingParams.pageSize.toString());
+    return params;
   }
 
   get activitiesByDate() {
@@ -40,7 +52,7 @@ class ActivityStore {
   loadActivities = async () => {
     this.loadingInitial = true;
     try {
-      const result = await agent.Activities.list();
+      const result = await agent.Activities.list(this.axiosParama);
       result.data.forEach((activity) => {
         this.setActivity(activity);
       });
